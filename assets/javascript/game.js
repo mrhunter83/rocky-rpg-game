@@ -18,7 +18,7 @@ $(document).ready(function() {
 		var Boxers = [{Name:"Rocky Balboa", Health:150, AttackPower:5, CounterAttackPower:6, AttckIncrease:5}, 
 		{Name:"Apollo Creed", Health:150, AttackPower:6, CounterAttackPower:7, AttckIncrease:6},
 		{Name:"Clubber Lang", Health:160, AttackPower:7, CounterAttackPower:8, AttckIncrease:7},
-		{Name:"Ivan Drago", Health: 200, AttackPower: 9, CounterAttackPower:10, AttckIncrease:9}]
+		{Name:"Ivan Drago", Health: 205, AttackPower: 10, CounterAttackPower:11, AttckIncrease:10}]
 
 		var Rocky = Boxers[0];
 		var Apollo = Boxers[1];
@@ -66,12 +66,12 @@ $(document).ready(function() {
 					matchup[1] = Rocky;
 					index += 1
 				}
-				else if (index === 2) {
+				else if (index === 2 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(RB);
 					matchup[1] = Rocky;
 					index += 1;
 				}
-				else if (index === 3) {
+				else if (index === 3 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(RB);
 					matchup[1] = Rocky;
 				}
@@ -91,12 +91,12 @@ $(document).ready(function() {
 					matchup[1] = Apollo;
 					index += 1
 				}
-				else if (index === 2) {
+				else if (index === 2 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(AC);
 					matchup[1] = Apollo;
 					index += 1;
 				}
-				else if (index === 3) {
+				else if (index === 3 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(AC);
 					matchup[1] = Apollo;
 				}
@@ -116,12 +116,12 @@ $(document).ready(function() {
 					matchup[1] = Clubber;
 					index += 1
 				}
-				else if (index === 2) {
+				else if (index === 2 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(CL);
 					matchup[1] = Clubber;
 					index += 1;
 				}
-				else if (index === 3) {
+				else if (index === 3 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(CL);
 					matchup[1] = Clubber;
 				}
@@ -141,12 +141,12 @@ $(document).ready(function() {
 					matchup[1] = Ivan;
 					index += 1
 				}
-				else if (index === 2) {
+				else if (index === 2 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(ID);
 					matchup[1] = Ivan;
 					index += 1;
 				}
-				else if (index === 3) {
+				else if (index === 3 && matchup[1] === undefined) {
 					$("#opponentBox").prepend(ID);
 					matchup[1] = Ivan;
 				}
