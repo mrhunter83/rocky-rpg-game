@@ -13,11 +13,12 @@ $(document).ready(function() {
 		})
 		var index = 0;
 		var matchup = [];
+		var defeated = 0;
 
-		var Boxers = [{Name:"Rocky Balboa", Health:150, AttackPower:7, CounterAttackPower:7, AttckIncrease:7}, 
-		{Name:"Apollo Creed", Health:150, AttackPower:8, CounterAttackPower:9, AttckIncrease:8},
-		{Name:"Clubber Lang", Health:140, AttackPower:10, CounterAttackPower:11, AttckIncrease:10},
-		{Name:"Ivan Drago", Health: 220, AttackPower: 15, CounterAttackPower:22, AttckIncrease:15}]
+		var Boxers = [{Name:"Rocky Balboa", Health:150, AttackPower:5, CounterAttackPower:6, AttckIncrease:5}, 
+		{Name:"Apollo Creed", Health:150, AttackPower:6, CounterAttackPower:7, AttckIncrease:6},
+		{Name:"Clubber Lang", Health:160, AttackPower:7, CounterAttackPower:8, AttckIncrease:7},
+		{Name:"Ivan Drago", Health: 200, AttackPower: 9, CounterAttackPower:10, AttckIncrease:9}]
 
 		var Rocky = Boxers[0];
 		var Apollo = Boxers[1];
@@ -152,11 +153,14 @@ $(document).ready(function() {
 			});
 
 			$("#Attackbtn").click(function() {
-				if (matchup[0] === undefined) {
+				if (matchup[0] === undefined && defeated < 3) {
 					return alert("Choose Your Fighter!");
 				}
-				else if (matchup[1] === undefined && matchup[0].Health > 0) {
+				else if (matchup[1] === undefined && matchup[0].Health > 0 && defeated < 3) {
 					return alert("Choose Your Opponent!");
+				}
+				else if (defeated === 3) {
+					return alert("There are no more opponents, you're the CHAMP!");
 				}
 				else if (matchup[0].Health > 0) {
 					matchup[1].Health -= matchup[0].AttackPower;
@@ -205,6 +209,7 @@ $(document).ready(function() {
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
 							matchup[1] = undefined;
+							defeated += 1;
 						}
 					}
 					else if (matchup[1].Name === "Apollo Creed") {
@@ -214,6 +219,7 @@ $(document).ready(function() {
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
 							matchup[1] = undefined;
+							defeated += 1;
 						}
 					}
 					else if (matchup[1].Name === "Clubber Lang") {
@@ -223,6 +229,7 @@ $(document).ready(function() {
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
 							matchup[1] = undefined;
+							defeated += 1;
 						}
 					}
 					else if (matchup[1].Name === "Ivan Drago") {
@@ -232,19 +239,49 @@ $(document).ready(function() {
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
 							matchup[1] = undefined;
+							defeated += 1;
 						};
+						console.log(defeated);
 					}
-
 				}
+
 				if (matchup[0].Health <= 0) {
 					ResetGame();
 				}
+				else if (defeated === 3  && matchup[0].Name === "Rocky Balboa" && matchup[1] === undefined) {
+					$("#chooseOpponent").replaceWith("<h1 id=chooseOpponent>You Win!</h1>");
+					$("#fighterRow").append(RB);
+					$("#opponentBox").empty();
+					$("#characterBox").empty();
+					ResetGame();
+				}
+				else if (defeated === 3  && matchup[0].Name === "Apollo Creed" && matchup[1] === undefined) {
+					$("#chooseOpponent").replaceWith("<h1 id=chooseOpponent>You Win!</h1>");
+					$("#fighterRow").append(AC);
+					$("#opponentBox").empty();
+					$("#characterBox").empty();
+					ResetGame();
+				}
+				else if (defeated === 3  && matchup[0].Name === "Clubber Lang" && matchup[1] === undefined) {
+					$("#chooseOpponent").replaceWith("<h1 id=chooseOpponent>You Win!</h1>");
+					$("#fighterRow").append(CL);
+					$("#opponentBox").empty();
+					$("#characterBox").empty();
+					ResetGame();
+				}
+				else if (defeated === 3  && matchup[0].Name === "Ivan Drago" && matchup[1] === undefined) {
+					$("#chooseOpponent").replaceWith("<h1 id=chooseOpponent>You Win!</h1>");
+					$("#fighterRow").append(ID);
+					$("#opponentBox").empty();
+					$("#characterBox").empty();
+					ResetGame();
+				}
 			});
-			function ResetGame () {
-				$("#Reset").html("<button id=ResetBtn>Reset The Game</button>")
-				$("#ResetBtn").click(function() {
-					location.reload();
-				});
-			}
-		}
-	})
+function ResetGame () {
+	$("#Reset").html("<button id=ResetBtn>Reset The Game</button>")
+	$("#ResetBtn").click(function() {
+		location.reload();
+	});
+}
+}
+})
