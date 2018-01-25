@@ -2,6 +2,8 @@ $(document).ready(function() {
 
 	LetsBox();
 
+	// Game function
+
 	function LetsBox() {
 		myAudio.play();
 		document.getElementById("myAudio").loop = true;
@@ -15,6 +17,8 @@ $(document).ready(function() {
 		var matchup = [];
 		var defeated = 0;
 
+		// Assign base stats to each character 
+
 		var Boxers = [{Name:"Rocky Balboa", Health:150, AttackPower:5, CounterAttackPower:6, AttckIncrease:5}, 
 		{Name:"Apollo Creed", Health:150, AttackPower:6, CounterAttackPower:7, AttckIncrease:6},
 		{Name:"Clubber Lang", Health:160, AttackPower:7, CounterAttackPower:8, AttckIncrease:7},
@@ -25,9 +29,10 @@ $(document).ready(function() {
 		var Clubber = Boxers[2];
 		var Ivan = Boxers[3];
 
-			// Create four character divs and assign class "Fighters" to each. RB=Rocky Balboa, AC=Apollo Creed, CL=Clubber Lang, and ID=Ivan Drago
+			// Create four character divs and assign class "Fighters" to each. 
+			// RB=Rocky Balboa, AC=Apollo Creed, CL=Clubber Lang, and ID=Ivan Drago
 
-			$(".col-md-12").append("<h1>ROCKY BOXING RPG!</h1>")
+			$(".col-md-12").append("<header><h1>ROCKY BOXING RPG!</h1></header>")
 
 			RB = $("<div><h3>Rocky Balboa</h3> <img src=assets/images/Rocky.jpg alt=Rock/><h3 id=RockyStats></h3></div>").attr("class","Rocky");
 			AC = $("<div><h3>Apollo Creed</h3> <img src=assets/images/Apollo.jpg alt=Creed/><h3 id=ApolloStats></h3></div>").attr("class","Apollo");
@@ -46,13 +51,21 @@ $(document).ready(function() {
 			$("#ClubberStats").append("Health: " + Clubber.Health);
 			$("#IvanStats").append("Health: " + Ivan.Health);
 			
-			// When user chooses two fighters, move their divs into versus position. Set data attribute to 'true' if clicked.
+			// Change text when user chooses their fighter and their oppenent.
 
-			$(".Rocky, .Apollo, .Clubber, .Ivan").one('click', function() {
-				$("#chooseFighter").replaceWith("<h1 id=chooseOpponent>Choose Your Opponent!</h1>");
+			$(".Rocky, .Apollo, .Clubber, .Ivan").on('click', function() {
+				if(matchup[0] === undefined) {
+					$("#chooseFighter").replaceWith("<h1 id=chooseOpponent>Choose Your Opponent!</h1>");
+				}
+				else if(matchup[0] !== undefined) {
+					$("#chooseOpponent").replaceWith("<h1 id=versusTag>VERSUS!</h1>");
+				}
 			})
 
-			RB.one('click', function() {
+			// When user chooses two fighters, move their divs into versus position.
+			// Set matchup variables.
+
+			RB.on('click', function() {
 				if (matchup[0] === undefined) {
 					$("#characterBox").append("<h3>Your Character</h3>");
 					$("#characterBox").prepend(RB);
@@ -75,9 +88,12 @@ $(document).ready(function() {
 					$("#opponentBox").prepend(RB);
 					matchup[1] = Rocky;
 				}
+				else if (matchup[0] && matchup[1] !== undefined) {
+					alert("Two fighters already selected");
+				}
 			});
 
-			AC.one('click', function() {
+			AC.on('click', function() {
 				if (matchup[0] === undefined) {
 					$("#characterBox").append("<h3>Your Character</h3>");
 					$("#characterBox").prepend(AC);
@@ -100,9 +116,12 @@ $(document).ready(function() {
 					$("#opponentBox").prepend(AC);
 					matchup[1] = Apollo;
 				}
+				else if (matchup[0] && matchup[1] !== undefined) {
+					alert("Two fighters already selected");
+				}
 			});
 
-			CL.one('click', function() {
+			CL.on('click', function() {
 				if (matchup[0] === undefined) {
 					$("#characterBox").append("<h3>Your Character</h3>");
 					$("#characterBox").prepend(CL);
@@ -125,9 +144,12 @@ $(document).ready(function() {
 					$("#opponentBox").prepend(CL);
 					matchup[1] = Clubber;
 				}
+				else if (matchup[0] && matchup[1] !== undefined) {
+					alert("Two fighters already selected");
+				}
 			});
 
-			ID.one('click', function() {
+			ID.on('click', function() {
 				if (matchup[0] === undefined) {
 					$("#characterBox").append("<h3>Your Character</h3>");
 					$("#characterBox").prepend(ID);
@@ -150,7 +172,12 @@ $(document).ready(function() {
 					$("#opponentBox").prepend(ID);
 					matchup[1] = Ivan;
 				}
+				else if (matchup[0] && matchup[1] !== undefined) {
+					alert("Two fighters already selected");
+				}
 			});
+
+			// Fight mechanics.
 
 			$("#Attackbtn").click(function() {
 				if (matchup[0] === undefined && defeated < 3) {
@@ -208,6 +235,7 @@ $(document).ready(function() {
 							$(".Rocky").hide();
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
+							$("#versusTag").replaceWith("<h1 id=chooseOpponent>Choose Your Opponent!</h1>");
 							matchup[1] = undefined;
 							defeated += 1;
 						}
@@ -218,6 +246,7 @@ $(document).ready(function() {
 							$(".Apollo").hide();
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
+							$("#versusTag").replaceWith("<h1 id=chooseOpponent>Choose Your Opponent!</h1>");
 							matchup[1] = undefined;
 							defeated += 1;
 						}
@@ -228,6 +257,7 @@ $(document).ready(function() {
 							$(".Clubber").hide();
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
+							$("#versusTag").replaceWith("<h1 id=chooseOpponent>Choose Your Opponent!</h1>");
 							matchup[1] = undefined;
 							defeated += 1;
 						}
@@ -238,6 +268,7 @@ $(document).ready(function() {
 							$(".Ivan").hide();
 							$("#FighterDmgReport").html("");
 							$("#OpponentDmgReport").html("You KO'D " + matchup[1].Name + "!");
+							$("#versusTag").replaceWith("<h1 id=chooseOpponent>Choose Your Opponent!</h1>");
 							matchup[1] = undefined;
 							defeated += 1;
 						};
@@ -245,14 +276,21 @@ $(document).ready(function() {
 					}
 				}
 
+				// Reset the game when player is defeated
+
 				if (matchup[0].Health <= 0) {
 					ResetGame();
 				}
+
+				// Else, when player defeats all opponents, indicate win and initiate game reset.
+
 				else if (defeated === 3  && matchup[0].Name === "Rocky Balboa" && matchup[1] === undefined) {
 					$("#chooseOpponent").replaceWith("<h1 id=chooseOpponent>You Win!</h1>");
 					$("#fighterRow").append(RB);
 					$("#opponentBox").empty();
 					$("#characterBox").empty();
+					$("#versusTag").remove();
+					RB.unbind();
 					ResetGame();
 				}
 				else if (defeated === 3  && matchup[0].Name === "Apollo Creed" && matchup[1] === undefined) {
@@ -260,6 +298,8 @@ $(document).ready(function() {
 					$("#fighterRow").append(AC);
 					$("#opponentBox").empty();
 					$("#characterBox").empty();
+					$("#versusTag").remove();
+					AC.unbind();
 					ResetGame();
 				}
 				else if (defeated === 3  && matchup[0].Name === "Clubber Lang" && matchup[1] === undefined) {
@@ -267,6 +307,8 @@ $(document).ready(function() {
 					$("#fighterRow").append(CL);
 					$("#opponentBox").empty();
 					$("#characterBox").empty();
+					$("#versusTag").remove();
+					CL.unbind();
 					ResetGame();
 				}
 				else if (defeated === 3  && matchup[0].Name === "Ivan Drago" && matchup[1] === undefined) {
@@ -274,9 +316,15 @@ $(document).ready(function() {
 					$("#fighterRow").append(ID);
 					$("#opponentBox").empty();
 					$("#characterBox").empty();
+					$("#versusTag").remove();
+					ID.unbind();
 					ResetGame();
 				}
 			});
+
+// Function which allows player to reset the game once they are defeated 
+// or when they defeat all of their opponents.
+
 function ResetGame () {
 	$("#Reset").html("<button id=ResetBtn>Reset The Game</button>")
 	$("#ResetBtn").click(function() {
